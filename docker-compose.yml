@@ -1,0 +1,17 @@
+services:
+  jancadoes:
+    build: .
+    container_name: jancadoes
+    ports:
+      - "8000:8000"
+    # API key is read from .env (GPT_OPENAPI_API_KEY).
+    env_file:
+      - .env
+    environment:
+      - PORT=8000
+      - IMAGE_QUALITY=high
+      - IMAGE_SIZE=auto
+    # Persist registered accounts across rebuilds.
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

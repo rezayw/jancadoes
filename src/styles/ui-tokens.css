@@ -1,0 +1,346 @@
+/* ui-tokens.css — Jancadoes brand design system
+   Kawaii avocado: soft greens, pale yellow, pink hearts.
+*/
+
+:root {
+  /* paper */
+  --bg:        #FDFBF6;
+  --bg-2:      #ffffff;
+  --bg-soft:   #f6f0d8;     /* very pale yellow */
+  --bg-leaf:   #ecf5dd;     /* very pale green */
+  --bg-elev:   rgba(255,255,255,0.78);
+
+  /* ink — deep avocado green */
+  --ink:       #2E5A2E;
+  --ink-soft:  #5e7547;
+  --ink-mute:  #95a589;
+  --border:    rgba(46,90,46,.10);
+  --border-strong: rgba(46,90,46,.22);
+
+  /* sage — primary brand green (medium) */
+  --sage:        #5E8C3A;
+  --sage-deep:   #2E5A2E;
+  --sage-light:  #A6D36B;
+  --sage-soft:   #e5f0d3;
+  --sage-glow:   rgba(94,140,58,.22);
+
+  /* lime — accent light green */
+  --lime:        #A6D36B;
+  --lime-soft:   #dcedc1;
+
+  /* warm — pale yellow cream */
+  --warm:        #FFE6A6;
+  --warm-deep:   #d4a83a;
+  --warm-soft:   #FFF4A9;
+
+  /* brown — avocado pit */
+  --tan:         #8B5A2B;
+  --tan-deep:    #5d3c1b;
+  --tan-soft:    #f0e3d0;
+
+  /* pink — hearts & blush */
+  --pink:        #FF9DB0;
+  --pink-deep:   #e57082;
+  --pink-soft:   #ffe2e8;
+
+  /* danger */
+  --rose:        #e57082;
+
+  /* radii — soft & rounded for kawaii feel */
+  --r-xs: 10px;
+  --r-sm: 14px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-2x: 40px;
+
+  /* shadows — soft & friendly */
+  --sh-1: 0 1px 2px rgba(46,90,46,.05), 0 0 0 .5px rgba(46,90,46,.04);
+  --sh-2: 0 4px 16px -2px rgba(46,90,46,.08), 0 1px 3px rgba(46,90,46,.06), 0 0 0 .5px rgba(46,90,46,.04);
+  --sh-3: 0 18px 40px -10px rgba(46,90,46,.18), 0 4px 12px -2px rgba(46,90,46,.08), 0 0 0 .5px rgba(46,90,46,.04);
+  --sh-4: 0 36px 80px -20px rgba(46,90,46,.24), 0 8px 22px -4px rgba(46,90,46,.10);
+  --sh-glow: 0 0 0 6px var(--sage-glow);
+
+  /* type */
+  --f-sans:    "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --f-display: "Fredoka", "Plus Jakarta Sans", system-ui, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* legacy alias — old code used --f-serif as display */
+  --f-serif:   "Fredoka", "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+/* palette variants */
+[data-palette="leaf"] {
+  /* greener forward */
+  --bg: #f5f9ec;
+  --bg-soft: #ecf5dd;
+  --sage: #4a7a2a; --sage-deep: #275024;
+}
+[data-palette="sunny"] {
+  /* yellow forward */
+  --bg: #fffceb;
+  --bg-soft: #FFF4A9;
+  --warm-soft: #FFE6A6;
+}
+[data-palette="dark"] {
+  --bg:       #1f2a1c;
+  --bg-2:     #263322;
+  --bg-soft:  #2c3a28;
+  --bg-leaf:  #2c3a28;
+  --bg-elev:  rgba(38,51,34,0.8);
+  --ink:      #e9f3dd;
+  --ink-soft: #b6c8a5;
+  --ink-mute: #7a8f6b;
+  --border:   rgba(233,243,221,.10);
+  --border-strong: rgba(233,243,221,.22);
+  --sage-soft: #324a2b;
+  --warm-soft: #3a3520;
+  --pink-soft: #3d2a30;
+  --tan-soft:  #322821;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--f-sans);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--lime); color: var(--ink); }
+
+/* Backdrop ambient — soft pastel blobs in brand colors */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(70% 50% at 8% 0%,   var(--sage-soft) 0%, transparent 60%),
+    radial-gradient(50% 40% at 100% 20%, var(--warm-soft) 0%, transparent 60%),
+    radial-gradient(40% 35% at 90% 70%, var(--pink-soft) 0%, transparent 60%),
+    radial-gradient(50% 35% at 30% 100%, var(--lime-soft) 0%, transparent 60%);
+  opacity: .65;
+}
+[data-palette="dark"] body::before { opacity: .35; }
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-2);
+  color: var(--ink);
+  font: 600 14px/1 var(--f-sans);
+  cursor: pointer;
+  transition: transform .15s cubic-bezier(.2,.7,.3,1), box-shadow .15s, background .15s, color .15s;
+  white-space: nowrap;
+  position: relative;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--sh-2); }
+.btn:active { transform: translateY(0); }
+
+.btn.primary {
+  background: var(--sage-deep);
+  color: #FDFBF6;
+  border-color: var(--sage-deep);
+  box-shadow: 0 4px 0 -1px #1c3d1c, var(--sh-2);
+}
+.btn.primary:hover { box-shadow: 0 6px 0 -1px #1c3d1c, var(--sh-3), 0 0 0 4px var(--sage-glow); }
+.btn.primary:active { box-shadow: 0 2px 0 -1px #1c3d1c, var(--sh-1); transform: translateY(2px); }
+
+.btn.sage { background: var(--sage); color: #fff; border-color: var(--sage-deep); box-shadow: 0 3px 0 -1px var(--sage-deep), var(--sh-1); }
+.btn.sage:hover { box-shadow: 0 5px 0 -1px var(--sage-deep), var(--sh-2); }
+.btn.warm { background: var(--warm); color: var(--ink); border-color: var(--warm-deep); }
+.btn.lime { background: var(--lime); color: var(--ink); border-color: var(--sage); }
+.btn.pink { background: var(--pink); color: var(--ink); border-color: var(--pink-deep); }
+.btn.ghost { background: transparent; border-color: var(--border-strong); }
+.btn.sm { padding: 8px 14px; font-size: 13px; }
+.btn.lg { padding: 14px 24px; font-size: 15px; }
+
+/* ─── Chips ─── */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; font: 600 12.5px/1.2 var(--f-sans);
+  background: var(--bg-2); color: var(--ink-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+}
+.chip.sage { background: var(--sage-soft); color: var(--sage-deep); border-color: transparent; }
+.chip.lime { background: var(--lime-soft); color: var(--sage-deep); border-color: transparent; }
+.chip.tan  { background: var(--tan-soft);  color: var(--tan-deep);  border-color: transparent; }
+.chip.warm { background: var(--warm-soft); color: var(--tan-deep);  border-color: transparent; }
+.chip.pink { background: var(--pink-soft); color: var(--pink-deep); border-color: transparent; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+.card.lift { transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s; }
+.card.lift:hover { transform: translateY(-4px); box-shadow: var(--sh-3); }
+
+.glass {
+  background: var(--bg-elev);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1.5px solid var(--border);
+}
+
+/* ─── Photo placeholders ─── */
+.ph {
+  position: relative; overflow: hidden;
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,.5), transparent 60%),
+    linear-gradient(140deg, var(--lime-soft), var(--sage-soft) 60%, var(--warm-soft));
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.ph.warm { background:
+    radial-gradient(120% 80% at 30% 30%, rgba(255,255,255,.45), transparent 55%),
+    linear-gradient(160deg, var(--warm-soft), var(--warm) 55%, #d4a83a); }
+.ph.golden { background:
+    radial-gradient(120% 80% at 30% 25%, rgba(255,225,160,.7), transparent 60%),
+    linear-gradient(160deg, #FFF4A9, var(--warm) 55%, #d4a83a); }
+.ph.cool { background:
+    radial-gradient(120% 80% at 30% 30%, rgba(255,255,255,.4), transparent 60%),
+    linear-gradient(160deg, var(--lime-soft), var(--lime) 55%, var(--sage)); }
+.ph.dusk { background:
+    radial-gradient(120% 80% at 30% 30%, rgba(255,220,200,.5), transparent 60%),
+    linear-gradient(160deg, var(--pink-soft), var(--pink) 55%, var(--tan)); }
+.ph.studio { background:
+    radial-gradient(120% 80% at 50% 25%, rgba(255,255,255,.6), transparent 55%),
+    linear-gradient(160deg, var(--warm-soft), var(--tan-soft) 50%, var(--tan)); }
+
+.ph .ph-lbl {
+  position: absolute; left: 12px; bottom: 12px;
+  font: 600 10px/1 var(--f-mono); letter-spacing: .08em;
+  color: rgba(255,255,255,.95);
+  background: rgba(46,90,46,.6);
+  padding: 5px 10px; border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+/* "Subject" silhouette inside .ph — soft blob to suggest a photo subject */
+.subject {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.subject::before {
+  content: ""; position: absolute;
+  left: 50%; bottom: 0;
+  transform: translateX(-50%);
+  width: 60%; height: 75%;
+  background:
+    radial-gradient(40% 30% at 50% 18%, rgba(0,0,0,.16) 0 60%, transparent 80%),
+    radial-gradient(60% 70% at 50% 100%, rgba(0,0,0,.18) 0 60%, transparent 90%);
+  filter: blur(3px);
+}
+
+/* ─── Type ─── */
+h1, h2, h3 { margin: 0; font-weight: 600; }
+.h-display {
+  font-family: var(--f-display);
+  font-size: clamp(42px, 5.6vw, 84px);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--sage-deep);
+}
+.h-display em {
+  font-family: var(--f-display);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.h-section {
+  font-family: var(--f-display);
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  font-weight: 600;
+  color: var(--sage-deep);
+}
+.h-section em {
+  font-family: var(--f-display);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.muted { color: var(--ink-soft); }
+.mono  { font-family: var(--f-mono); }
+
+.container {
+  width: min(1200px, 100% - 48px);
+  margin: 0 auto;
+}
+
+hr.rule { border: 0; border-top: 1.5px solid var(--border); margin: 0; }
+
+/* ─── Eyebrow ─── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 700 11px/1 var(--f-sans);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sage);
+  padding: 6px 12px;
+  background: var(--sage-soft);
+  border-radius: 999px;
+}
+.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sage); }
+
+/* ─── Brand wordmark gradient ─── */
+.brand-mark {
+  font-family: var(--f-display);
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--sage), var(--sage-deep) 60%, var(--tan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -.02em;
+}
+
+/* ─── Decorative SVG sprite — hearts, sparkles, leaves ─── */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.deco.heart   { color: var(--pink); }
+.deco.sparkle { color: var(--warm-deep); }
+.deco.leaf    { color: var(--sage); }
+.deco.lime    { color: var(--lime); }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+.deco.float { animation: float-slow 4.5s ease-in-out infinite; }
+.deco.float-delay { animation: float-slow 5.5s ease-in-out -2s infinite; }
+.deco.float-fast  { animation: float-slow 3.5s ease-in-out -1s infinite; }
+
+/* ─── Logo wordmark ─── */
+.logo-word {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -.01em;
+  color: var(--sage-deep);
+}
+
+/* Sticker outline effect for the wordmark in some places */
+.sticker {
+  font-family: var(--f-display);
+  font-weight: 600;
+  color: var(--sage-deep);
+  text-shadow:
+    -2px -2px 0 var(--bg), 2px -2px 0 var(--bg),
+    -2px 2px 0 var(--bg),  2px 2px 0 var(--bg),
+    -4px 0 0 var(--lime), 4px 0 0 var(--lime),
+    0 -4px 0 var(--lime), 0 4px 0 var(--lime);
+}

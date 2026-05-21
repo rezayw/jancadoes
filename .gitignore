@@ -1,0 +1,17 @@
+# Secrets — never commit (contains the OpenAI API key)
+.env
+
+# Runtime data — SQLite DB, JWT secret, migrated/legacy files
+data/
+
+# Dependencies
+node_modules/
+
+# Editor / OS noise
+.vscode/
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
