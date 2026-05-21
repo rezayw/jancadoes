@@ -2,10 +2,27 @@
 
 Studio-grade photo enhancement — restore, relight, upscale to 4K.
 
+![Jancadoes — photo enhancement landing page](assets/banner.png)
+
 The frontend is a no-build static site: React + Babel are loaded from a CDN, so
 the `.jsx` files run directly in the browser. The **Try it** flow calls a small
 Node/Express backend (`server/`) that runs the photo through OpenAI
 `gpt-image-1`, using the RAG prompt for the chosen mode (see `docs/rag.md`).
+
+## Modes
+
+Seven enhancement modes, each driven by a hand-tuned RAG prompt — plus
+**Auto-pick**, where `gpt-5` chooses the best mode for your photo:
+
+| # | Mode | What it does |
+|---|------|--------------|
+| 1 | Phone → Studio   | Studio lighting + clean background |
+| 2 | Correct Lighting | Fix exposure, recover shadows |
+| 3 | Golden Hour      | Warm portrait glow, soft skin tones |
+| 4 | Restore Old      | Repair scratches, blur, and color fade |
+| 5 | Remove People    | Clear background photo-bombs |
+| 6 | Remove Watermark | Auto-detect + erase watermarks |
+| 7 | 4K Enhancer      | Upscale resolution up to 4× with detail |
 
 ## Run it with Docker (recommended)
 
