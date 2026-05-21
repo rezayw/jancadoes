@@ -5,7 +5,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const { promptFor, PROMPTS } = require('./prompts');
+const { promptFor, prompts } = require('./prompts');
 const auth = require('./auth');
 
 const ROOT = path.join(__dirname, '..');
@@ -61,7 +61,7 @@ app.get('/api/health', (_req, res) => {
   res.json({
     ok: true,
     keyConfigured: Boolean(API_KEY),
-    modes: Object.keys(PROMPTS),
+    modes: Object.keys(prompts()),
   });
 });
 
@@ -120,7 +120,7 @@ app.get('/api/me', (req, res) => {
 
 // ─── Auto mode: ask a vision model which mode fits the photo ─────────
 async function pickMode(buffer, mimeType) {
-  const choices = Object.entries(PROMPTS)
+  const choices = Object.entries(prompts())
     .map(([id, p]) => `- ${id}: ${p.title}`)
     .join('\n');
 
@@ -248,5 +248,5 @@ app.listen(PORT, () => {
   console.log(`  API key: ${API_KEY ? 'configured' : 'MISSING — set GPT_OPENAPI_API_KEY'}`);
   console.log(`  models: ${IMAGE_MODEL} (enhance) · ${AUTO_MODEL} (auto-pick)`);
   console.log(`  image: quality=${IMAGE_QUALITY} · size=${IMAGE_SIZE}`);
-  console.log(`  RAG modes: ${Object.keys(PROMPTS).join(', ')}`);
+  console.log(`  RAG modes: ${Object.keys(prompts()).join(', ')}`);
 });

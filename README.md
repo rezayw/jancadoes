@@ -74,7 +74,9 @@ or straight from the **Try it** flow.
    to `POST /api/enhance` with a `Bearer` token.
 2. `server/prompts.js` parses `docs/rag.md` — its 7 numbered sections map, in
    order, to the 7 modes (`studio`, `lighting`, `golden`, `restore`, `people`,
-   `watermark`, `fourk`).
+   `watermark`, `fourk`). The file is re-parsed automatically when it changes,
+   and `docs/` is mounted into the container — so editing a prompt in
+   `rag.md` takes effect on the next request, no rebuild or restart.
 3. `mode=auto` first asks `gpt-5` (vision) to pick the best mode.
 4. The image + RAG prompt go to OpenAI `images/edits` (`gpt-image-2`); the
    result is returned as a data URL and shown in the before/after comparison.

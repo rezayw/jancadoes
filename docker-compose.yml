@@ -11,7 +11,9 @@ services:
       - PORT=8000
       - IMAGE_QUALITY=high
       - IMAGE_SIZE=auto
-    # Persist registered accounts across rebuilds.
     volumes:
+      # Persist registered accounts across rebuilds.
       - ./data:/app/data
+      # Live RAG prompts — edits to docs/rag.md apply without a rebuild.
+      - ./docs:/app/docs:ro
     restart: unless-stopped
