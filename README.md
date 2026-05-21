@@ -7,7 +7,7 @@ Studio-grade photo enhancement — restore, relight, upscale to 4K.
 The frontend is a no-build static site: React + Babel are loaded from a CDN, so
 the `.jsx` files run directly in the browser. The **Try it** flow calls a small
 Node/Express backend (`server/`) that runs the photo through OpenAI
-`gpt-image-1`, using the RAG prompt for the chosen mode (see `docs/rag.md`).
+`gpt-image-2`, using the RAG prompt for the chosen mode (see `docs/rag.md`).
 
 ## Modes
 
@@ -76,7 +76,7 @@ or straight from the **Try it** flow.
    order, to the 7 modes (`studio`, `lighting`, `golden`, `restore`, `people`,
    `watermark`, `fourk`).
 3. `mode=auto` first asks `gpt-5` (vision) to pick the best mode.
-4. The image + RAG prompt go to OpenAI `images/edits` (`gpt-image-1`); the
+4. The image + RAG prompt go to OpenAI `images/edits` (`gpt-image-2`); the
    result is returned as a data URL and shown in the before/after comparison.
 
 Models are overridable via env (`IMAGE_MODEL`, `AUTO_MODEL`); inputs are

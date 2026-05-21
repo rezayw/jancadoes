@@ -17,14 +17,19 @@ const API_KEY =
   process.env.OPENAI_API_KEY ||
   '';
 
-// gpt-image-1 quality/size — tune via env if desired.
+// gpt-image-1 output knobs — tune via env if desired.
 const IMAGE_QUALITY = process.env.IMAGE_QUALITY || 'high';
 const IMAGE_SIZE = process.env.IMAGE_SIZE || 'auto';
+// input_fidelity=high keeps faces/detail faithful — a gpt-image-1-only knob,
+// only sent for gpt-image-1 models (gpt-image-2 manages fidelity natively).
+const INPUT_FIDELITY = process.env.INPUT_FIDELITY || 'high';
 
-// Models — gpt-image-1 is OpenAI's top image editor; gpt-5 (most capable
+// Models — gpt-image-2 is OpenAI's latest image editor; gpt-5 (most capable
 // current model) drives the `auto` mode picker. Both overridable via env.
-const IMAGE_MODEL = process.env.IMAGE_MODEL || 'gpt-image-1';
+const IMAGE_MODEL = process.env.IMAGE_MODEL || 'gpt-image-2';
 const AUTO_MODEL = process.env.AUTO_MODEL || 'gpt-5';
+// Reasoning effort for the auto-pick classifier — higher = more accurate.
+const AUTO_REASONING = process.env.AUTO_REASONING || 'medium';
 
 const app = express();
 app.use(express.json({ limit: '256kb' })); // auth bodies are tiny
@@ -139,8 +144,8 @@ async function pickMode(buffer, mimeType) {
       },
     ],
     response_format: { type: 'json_object' },
-    reasoning_effort: 'low',
-    max_completion_tokens: 2000,
+    reasoning_effort: AUTO_REASONING,
+    max_completion_tokens: 3000,
   };
 
   const r = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -170,6 +175,11 @@ async function enhance(buffer, mimeType, filename, prompt) {
   form.append('prompt', prompt);
   form.append('size', IMAGE_SIZE);
   form.append('quality', IMAGE_QUALITY);
+  form.append('output_format', 'png'); // lossless result
+  // input_fidelity is a gpt-image-1-only parameter — gpt-image-2 rejects it.
+  if (IMAGE_MODEL === 'gpt-image-1' || IMAGE_MODEL === 'gpt-image-1-mini') {
+    form.append('input_fidelity', INPUT_FIDELITY);
+  }
   form.append('image', new Blob([buffer], { type: mimeType }), filename);
 
   const r = await fetch('https://api.openai.com/v1/images/edits', {
@@ -237,5 +247,6 @@ app.listen(PORT, () => {
   console.log(`Jancadoes running on http://localhost:${PORT}`);
   console.log(`  API key: ${API_KEY ? 'configured' : 'MISSING — set GPT_OPENAPI_API_KEY'}`);
   console.log(`  models: ${IMAGE_MODEL} (enhance) · ${AUTO_MODEL} (auto-pick)`);
+  console.log(`  image: quality=${IMAGE_QUALITY} · size=${IMAGE_SIZE}`);
   console.log(`  RAG modes: ${Object.keys(PROMPTS).join(', ')}`);
 });
