@@ -162,6 +162,10 @@ function TryFlow() {
     })
       .then(async (r) => {
         const data = await r.json().catch(() => ({}));
+        if (r.status === 401) {
+          auth.logout(); // stale/expired session — drop it and bounce to sign-in
+          throw new Error('Your session expired — please sign in again.');
+        }
         if (!r.ok) throw new Error(data.error || `Request failed (${r.status})`);
         return data;
       })

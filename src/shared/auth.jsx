@@ -40,9 +40,21 @@ function AuthProvider({ children }) {
     return data.user;
   };
 
-  const logout = () => {
+  const logout = async () => {
     const t = getToken();
-    if (t) fetch('/api/logout', { method: 'POST', headers: { Authorization: `Bearer ${t}` } }).catch(() => {});
+    if (t) {
+      // Await the revoke — and drain the response body — so the token is
+      // fully killed server-side before we clear state and (on /app)
+      // redirect away. `keepalive` lets it finish even mid-navigation.
+      try {
+        const r = await fetch('/api/logout', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${t}` },
+          keepalive: true,
+        });
+        await r.text();
+      } catch (_) { /* network hiccup — local logout still proceeds */ }
+    }
     localStorage.removeItem(TOKEN_KEY);
     setUser(null);
   };
