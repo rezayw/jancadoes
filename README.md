@@ -83,8 +83,10 @@ or straight from the **Try it** flow.
    and `docs/` is mounted into the container — so editing a prompt in
    `rag.md` takes effect on the next request, no rebuild or restart.
 3. `mode=auto` first asks `gpt-5` (vision) to pick the best mode.
-4. The image + RAG prompt go to OpenAI `images/edits` (`gpt-image-2`); the
-   result is returned as a data URL and shown in the before/after comparison.
+4. The image + RAG prompt go to OpenAI `images/edits` (`gpt-image-2`,
+   `quality=high`, `output_format=jpeg`, `output_compression=100` — ultra
+   quality, photo-friendly file size). The result comes back as a data URL,
+   is shown in the before/after comparison, and downloads as `.jpg`.
 
 Models are overridable via env (`IMAGE_MODEL`, `AUTO_MODEL`); inputs are
 validated server-side — image MIME type, 25 MB limit, mode allow-list, and

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" data-palette="warm">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Legal · Jancadoes</title>
+  <meta name="description" content="Privacy, Terms, Cookies, DMCA, and Acceptable use policies for Jancadoes." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/mascot-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <link rel="stylesheet" href="src/styles/ui-tokens.css" />
+  <link rel="stylesheet" href="src/styles/ui-layout.css" />
+
+  <style>
+    body { font-family: var(--f-sans); background: var(--bg); color: var(--ink); }
+    .legal-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg-elev); backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-nav-inner {
+      max-width: 1180px; margin: 0 auto; padding: 14px 24px;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .legal-nav .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .legal-nav .logo-mascot { width: 30px; height: 30px; }
+    .legal-nav .logo-word { font: 600 18px/1 var(--f-display); color: var(--sage-deep); letter-spacing: -.01em; }
+    .legal-nav nav { display: flex; gap: 18px; flex: 1; flex-wrap: wrap; }
+    .legal-nav nav a {
+      font: 500 13px/1 var(--f-sans); color: var(--ink-soft);
+      text-decoration: none; padding: 6px 2px;
+    }
+    .legal-nav nav a:hover { color: var(--ink); }
+    .legal-back {
+      font: 500 13px/1 var(--f-sans); color: var(--ink-soft);
+      text-decoration: none; padding: 8px 14px;
+      border: 1px solid var(--border); border-radius: 999px;
+      transition: background .15s, border-color .15s;
+    }
+    .legal-back:hover { background: var(--bg-soft); border-color: var(--border-strong); color: var(--ink); }
+
+    .legal-main { padding: 56px 0 80px; }
+    .legal-main .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .legal-head .eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font: 600 11px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sage-deep);
+    }
+    .legal-head .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); display: inline-block; }
+    .legal-head h1 {
+      font: 600 48px/1.05 var(--f-display);
+      letter-spacing: -.02em; color: var(--sage-deep);
+      margin: 14px 0 6px;
+    }
+    .legal-head .muted { color: var(--ink-mute); font-size: 14px; }
+
+    .legal-main section { margin-top: 40px; scroll-margin-top: 80px; }
+    .legal-main section h2 {
+      font: 600 26px/1.2 var(--f-display);
+      letter-spacing: -.015em; color: var(--ink);
+      margin: 0 0 12px;
+      padding-top: 18px; border-top: 1px solid var(--border);
+    }
+    .legal-main section h3 {
+      font: 600 15px/1.3 var(--f-sans);
+      color: var(--ink); margin: 22px 0 6px;
+    }
+    .legal-main p, .legal-main li {
+      font-size: 15px; line-height: 1.7; color: var(--ink-soft);
+    }
+    .legal-main p { margin: 10px 0; }
+    .legal-main ul { padding-left: 22px; margin: 8px 0; }
+    .legal-main code { font: 500 13px/1 var(--f-mono); background: var(--bg-soft); padding: 2px 6px; border-radius: 6px; }
+    .legal-main a { color: var(--sage); text-decoration: underline; }
+
+    .legal-foot {
+      border-top: 1px solid var(--border);
+      padding: 24px; text-align: center;
+      font: 500 12px/1.4 var(--f-mono); color: var(--ink-mute);
+    }
+    .legal-foot a { color: var(--ink-soft); text-decoration: none; margin: 0 8px; }
+  </style>
+</head>
+<body>
+  <header class="legal-nav">
+    <div class="legal-nav-inner">
+      <a href="/" class="logo">
+        <img src="assets/mascot-icon.png" alt="" class="logo-mascot" />
+        <span class="logo-word">Jancadoes</span>
+      </a>
+      <nav>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="#cookies">Cookies</a>
+        <a href="#dmca">DMCA</a>
+        <a href="#acceptable-use">Acceptable use</a>
+      </nav>
+      <a href="/" class="legal-back">← Home</a>
+    </div>
+  </header>
+
+  <main class="legal-main">
+    <div class="container">
+      <header class="legal-head">
+        <span class="eyebrow"><span class="dot"></span> Legal</span>
+        <h1>Policies &amp; terms</h1>
+        <p class="muted">Last updated: 24 May 2026.</p>
+      </header>
+
+      <section id="privacy">
+        <h2>Privacy</h2>
+        <p>
+          Jancadoes is a demo photo-enhancement service. We keep what we collect to the
+          minimum we need to run the product.
+        </p>
+        <h3>What we collect</h3>
+        <ul>
+          <li><strong>Account data.</strong> Your email, a name you choose, and your password (stored as a <code>scrypt</code> hash with a per-account salt — never in plain text).</li>
+          <li><strong>Uploaded photos.</strong> The image you send to <code>/api/enhance</code>. It is held in memory only for the duration of the request, sent to OpenAI&apos;s image-edit API, and discarded as soon as the response is returned. We do not write it to disk on our server.</li>
+          <li><strong>A session token.</strong> A signed JWT we issue at login. Stored in your browser&apos;s <code>localStorage</code>; the token <code>jti</code> goes in our database only if you explicitly log out, so that token can&apos;t be reused.</li>
+        </ul>
+        <h3>What we do with it</h3>
+        <ul>
+          <li>We <strong>do not</strong> sell or share your data.</li>
+          <li>We <strong>do not</strong> use your photos to train any model.</li>
+          <li>Photos pass through OpenAI&apos;s API; once there they are subject to <a href="https://openai.com/policies/" rel="noopener" target="_blank">OpenAI&apos;s policies</a>.</li>
+        </ul>
+        <h3>Your data, your call</h3>
+        <p>
+          You can ask us to delete your account at any time by contacting us via the
+          <a href="https://github.com/rezayw/jancadoes" rel="noopener" target="_blank">project repository</a>.
+        </p>
+      </section>
+
+      <section id="terms">
+        <h2>Terms</h2>
+        <p>
+          By signing up or using Jancadoes you agree to these terms. If you don&apos;t agree,
+          please don&apos;t use the service.
+        </p>
+        <h3>Demo &amp; warranty</h3>
+        <p>
+          Jancadoes is an experimental, non-commercial demo provided <strong>as-is</strong>.
+          We make no warranties about availability, accuracy, or fitness for any particular
+          purpose. The service may change, break, or shut down at any time.
+        </p>
+        <h3>Your content</h3>
+        <p>
+          You keep ownership of the photos you upload and any enhanced output. You confirm
+          that you have the right to upload each photo you submit.
+        </p>
+        <h3>Acceptable behavior</h3>
+        <p>
+          You agree to follow our <a href="#acceptable-use">Acceptable use policy</a>. We
+          may rate-limit, suspend, or remove accounts that abuse the service or violate it.
+        </p>
+        <h3>Liability</h3>
+        <p>
+          To the extent allowed by law, we&apos;re not liable for any indirect or
+          consequential losses arising from your use of the service.
+        </p>
+      </section>
+
+      <section id="cookies">
+        <h2>Cookies</h2>
+        <p>
+          Jancadoes does <strong>not</strong> set any third-party tracking cookies. We don&apos;t
+          run analytics, advertising pixels, or trackers.
+        </p>
+        <p>
+          We use <code>localStorage</code> to keep one item: your auth token
+          (<code>jancadoes_token</code>). It lets you stay signed in across page loads. When
+          you log out we delete it from your browser and revoke it on the server.
+        </p>
+      </section>
+
+      <section id="dmca">
+        <h2>DMCA</h2>
+        <p>
+          If you believe content on the service infringes your copyright, send a takedown
+          notice via the
+          <a href="https://github.com/rezayw/jancadoes/issues" rel="noopener" target="_blank">project repository</a>
+          with the following:
+        </p>
+        <ul>
+          <li>Your contact information (name, email, address).</li>
+          <li>Identification of the copyrighted work claimed to be infringed.</li>
+          <li>Identification of the material to be removed and where it can be found.</li>
+          <li>A good-faith statement that the use is not authorized.</li>
+          <li>A statement, under penalty of perjury, that the notice is accurate and you are authorized to act.</li>
+          <li>Your physical or electronic signature.</li>
+        </ul>
+        <p>We will review valid notices promptly and remove infringing material.</p>
+      </section>
+
+      <section id="acceptable-use">
+        <h2>Acceptable use</h2>
+        <p>
+          Don&apos;t use Jancadoes to create or distribute:
+        </p>
+        <ul>
+          <li>Child sexual abuse material (CSAM) or anything sexualizing minors.</li>
+          <li>Non-consensual intimate imagery, deepfakes, or content meant to harass.</li>
+          <li>Hate, violence, or harassment targeting individuals or protected groups.</li>
+          <li>Content that infringes someone else&apos;s intellectual property or impersonates them.</li>
+          <li>Material that violates applicable laws.</li>
+        </ul>
+        <p>And don&apos;t:</p>
+        <ul>
+          <li>Try to bypass authentication, rate limits, or input validation.</li>
+          <li>Scrape, mirror, or resell the service.</li>
+          <li>Share your account credentials with others.</li>
+        </ul>
+        <p>
+          We may rate-limit, suspend, or remove accounts that breach this policy. If something
+          looks wrong, please report it at the
+          <a href="https://github.com/rezayw/jancadoes/issues" rel="noopener" target="_blank">project repository</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <div class="legal-foot">
+    © 2026 Jancadoes ·
+    <a href="/">Home</a> ·
+    <a href="/app">App</a> ·
+    <a href="https://github.com/rezayw/jancadoes" rel="noopener" target="_blank">Source</a>
+  </div>
+</body>
+</html>

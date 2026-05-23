@@ -176,7 +176,8 @@ async function enhance(buffer, mimeType, filename, prompt) {
   form.append('prompt', prompt);
   form.append('size', IMAGE_SIZE);
   form.append('quality', IMAGE_QUALITY);
-  form.append('output_format', 'png'); // lossless result
+  form.append('output_format', 'jpeg');     // smaller download, photo-friendly
+  form.append('output_compression', '100'); // ultra quality (visually lossless)
   // input_fidelity is a gpt-image-1-only parameter — gpt-image-2 rejects it.
   if (IMAGE_MODEL === 'gpt-image-1' || IMAGE_MODEL === 'gpt-image-1-mini') {
     form.append('input_fidelity', INPUT_FIDELITY);
@@ -228,7 +229,7 @@ app.post('/api/enhance', auth.requireAuth, upload.single('image'), async (req, r
     const b64 = await enhance(buffer, mimetype, safeName(originalname), entry.prompt);
 
     res.json({
-      image: `data:image/png;base64,${b64}`,
+      image: `data:image/jpeg;base64,${b64}`,
       mode: modeId,
       modeTitle: entry.title,
       ms: Date.now() - started,

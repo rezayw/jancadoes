@@ -127,13 +127,6 @@ function Hero() {
         </div>
       </div>
 
-      <div className="hero-rail container">
-        <span className="mono rail-lbl">DIPAKAI OLEH · TRUSTED BY</span>
-        <div className="rail-logos">
-          {['kompas.id','tokopedia','gojek','traveloka','blibli','tirto'].map(x =>
-            <span key={x} className="rail-logo">{x}</span>)}
-        </div>
-      </div>
     </section>
   );
 }

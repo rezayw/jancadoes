@@ -123,18 +123,27 @@ function CtaBand() {
 }
 
 function Footer() {
+  // Honest footer — only links to things that actually exist.
   const cols = [
-    { h:'Product',  items:['Features','Pricing','Modes','API','Changelog'] },
-    { h:'Company',  items:['About','Blog','Careers','Contact','Press'] },
-    { h:'Resources',items:['Help center','Tutorials','Community','Status','Gallery'] },
-    { h:'Legal',    items:['Privacy','Terms','Cookies','DMCA','Acceptable use'] },
+    { h: 'Product', items: [
+      { label: 'Features',  href: '/#features' },
+      { label: 'Modes',     href: '/#features' },
+      { label: 'Try it',    href: '/app' },
+    ]},
+    { h: 'Legal', items: [
+      { label: 'Privacy',         href: '/legal#privacy' },
+      { label: 'Terms',           href: '/legal#terms' },
+      { label: 'Cookies',         href: '/legal#cookies' },
+      { label: 'DMCA',            href: '/legal#dmca' },
+      { label: 'Acceptable use',  href: '/legal#acceptable-use' },
+    ]},
   ];
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <a href="#" className="logo">
+            <a href="/" className="logo">
               <img src="assets/mascot-icon.png" alt="" className="logo-mascot" style={{ width: 44, height: 44 }} />
               <span className="logo-word" style={{ fontSize: 30 }}>Jancadoes</span>
             </a>
@@ -143,16 +152,12 @@ function Footer() {
               <Deco.Heart size={12} style={{ display:'inline-block', verticalAlign:'middle', margin:'0 3px' }} className="deco heart" />
               di Bandung, dipakai di seluruh nusantara.
             </p>
-            <div className="footer-social">
-              {['𝕏','Ig','▶','in','f'].map(x =>
-                <a key={x} className="footer-soc" href="#">{x}</a>)}
-            </div>
           </div>
           {cols.map(col =>
             <div key={col.h} className="footer-col">
               <div className="footer-h">{col.h}</div>
               <ul>
-                {col.items.map(x => <li key={x}><a href="#">{x}</a></li>)}
+                {col.items.map(x => <li key={x.label}><a href={x.href}>{x.label}</a></li>)}
               </ul>
             </div>
           )}
@@ -163,9 +168,8 @@ function Footer() {
             © 2026 Jancadoes · made with sambel di Indonesia
           </div>
           <div className="footer-bot-right">
-            <a href="#" className="muted" style={{ fontSize: 12 }}>Privacy</a>
-            <a href="#" className="muted" style={{ fontSize: 12 }}>Terms</a>
-            <a href="#" className="muted" style={{ fontSize: 12 }}>Sitemap</a>
+            <a href="/legal#privacy" className="muted" style={{ fontSize: 12 }}>Privacy</a>
+            <a href="/legal#terms" className="muted" style={{ fontSize: 12 }}>Terms</a>
             <span className="mono" style={{ fontSize: 11, color:'var(--ink-mute)' }}>v1.0.0</span>
           </div>
         </div>

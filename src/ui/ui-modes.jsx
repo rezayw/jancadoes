@@ -624,7 +624,7 @@ function StageResult({ mode, result, error, beforeUrl, afterUrl, onAgain, onRese
         <p className="muted">Drag the handle to compare. Suka? Download or try another mode.</p>
 
         <div className="result-actions">
-          <a className="btn primary lg" href={afterUrl} download="jancadoes-enhanced.png">
+          <a className="btn primary lg" href={afterUrl} download="jancadoes-enhanced.jpg">
             <Icon.Download width="18" height="18" /> Download
           </a>
           <button className="btn lg" onClick={onAgain}><Icon.Redo width="16" height="16" /> Enhance again</button>
