@@ -1,7 +1,6 @@
 // ui-modes.jsx — 7 modes showcase + interactive Try-it flow.
 // The Try-it flow does real work: it uploads the photo to /api/enhance,
-// which runs it through OpenAI gpt-image-1 with the RAG prompt for the
-// chosen mode (see server/server.js + docs/rag.md).
+// which applies the chosen mode's prompt (managed server-side).
 
 const MODE_DATA = [
   { id:'studio',    name:'Phone → Studio',     desc:'Studio lighting + clean background',         icon:'ModeStudio',  tint:'studio',  color:'sage' },
@@ -109,7 +108,6 @@ function TryFlow() {
   const [stage, setStage] = React.useState('upload'); // upload | choose | processing | result
   const [mode, setMode] = React.useState('golden');
   const [progress, setProgress] = React.useState(0);
-  const [compare, setCompare] = React.useState(58);
 
   const [file, setFile] = React.useState(null);
   const [beforeUrl, setBeforeUrl] = React.useState(null);
@@ -226,7 +224,7 @@ function TryFlow() {
                     onNext={() => setStage('processing')} onBack={() => setStage('upload')} />}
                   {stage === 'processing' && <StageProcessing mode={pickedMode} progress={progress} beforeUrl={beforeUrl} />}
                   {stage === 'result' && <StageResult mode={pickedMode} result={result} error={error}
-                    beforeUrl={beforeUrl} afterUrl={afterUrl} compare={compare} setCompare={setCompare}
+                    beforeUrl={beforeUrl} afterUrl={afterUrl}
                     onAgain={() => setStage('choose')} onReset={() => setStage('upload')}
                     onRetry={() => setStage('processing')} />}
                 </>}
@@ -412,10 +410,10 @@ function StageUpload({ onFile, error }) {
         </div>
         <div className="upload-recent">
           <div className="muted mono" style={{ fontSize: 11, letterSpacing:'.1em', textTransform:'uppercase' }}>
-            Powered by gpt-image-1
+            Powered by Jancadoes AI
           </div>
           <p className="muted" style={{ fontSize: 12.5, lineHeight: 1.5, marginTop: 8 }}>
-            Every mode runs a hand-tuned RAG prompt — restore, relight, upscale — for results
+            Each mode is tuned for one job — restore, relight, upscale — for results
             that match what you actually asked for.
           </p>
         </div>
@@ -485,11 +483,11 @@ function StageChoose({ mode, setMode, beforeUrl, fileName, onNext, onBack }) {
 function StageProcessing({ mode, progress, beforeUrl }) {
   const I = Icon[mode.icon];
   const steps = [
-    { label: 'Validate input',      at: 0   },
-    { label: 'Upload to Jancadoes', at: 14  },
-    { label: 'Apply RAG prompt',    at: 34  },
-    { label: 'gpt-image-1 inference', at: 56 },
-    { label: 'Render & deliver',    at: 86  },
+    { label: 'Validate input',         at: 0   },
+    { label: 'Upload to Jancadoes',    at: 14  },
+    { label: 'Tune enhancement',       at: 34  },
+    { label: 'Jancadoes AI inference', at: 56  },
+    { label: 'Render & deliver',       at: 86  },
   ];
   return (
     <div className="stage stage-processing">
@@ -546,9 +544,11 @@ function StageProcessing({ mode, progress, beforeUrl }) {
   );
 }
 
-function StageResult({ mode, result, error, beforeUrl, afterUrl, compare, setCompare, onAgain, onReset, onRetry }) {
+function StageResult({ mode, result, error, beforeUrl, afterUrl, onAgain, onReset, onRetry }) {
   const [dims, setDims] = React.useState(null);
-  const [dragging, setDragging] = React.useState(false);
+  const afterRef = React.useRef(null);
+  const handleRef = React.useRef(null);
+  const draggingRef = React.useRef(false);
 
   if (error) {
     return (
@@ -570,31 +570,42 @@ function StageResult({ mode, result, error, beforeUrl, afterUrl, compare, setCom
     );
   }
 
-  const onMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    setCompare(Math.max(0, Math.min(100, (x / rect.width) * 100)));
+  // Smooth compare: drive the clip + handle straight from the DOM on drag,
+  // so there's no React re-render per mouse move.
+  const setSplit = (pct) => {
+    pct = Math.max(0, Math.min(100, pct));
+    if (afterRef.current) afterRef.current.style.clipPath = `inset(0 0 0 ${pct}%)`;
+    if (handleRef.current) handleRef.current.style.left = `${pct}%`;
   };
+  const splitFrom = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    setSplit(((cx - rect.left) / rect.width) * 100);
+  };
+  const onMove = (e) => { if (draggingRef.current) splitFrom(e); };
+  const startDrag = (e) => { draggingRef.current = true; splitFrom(e); };
+  const endDrag = () => { draggingRef.current = false; };
+
   const secs = result && result.ms ? (result.ms / 1000).toFixed(1) : null;
 
   return (
     <div className="stage stage-result">
       <div className="result-compare"
-        onMouseMove={dragging ? onMove : undefined}
-        onMouseDown={(e) => { setDragging(true); onMove(e); }}
-        onMouseUp={() => setDragging(false)}
-        onMouseLeave={() => setDragging(false)}
+        onMouseDown={startDrag}
+        onMouseMove={onMove}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+        onTouchStart={startDrag}
         onTouchMove={onMove}
-        onTouchStart={(e) => { setDragging(true); onMove(e); }}
-        onTouchEnd={() => setDragging(false)}
+        onTouchEnd={endDrag}
       >
         <img className="result-before" src={beforeUrl} alt="before" style={{ objectFit:'cover' }} />
-        <img className="result-after" src={afterUrl} alt="after"
+        <img ref={afterRef} className="result-after" src={afterUrl} alt="after"
           onLoad={(e) => setDims({ w: e.target.naturalWidth, h: e.target.naturalHeight })}
-          style={{ objectFit:'cover', clipPath: `inset(0 0 0 ${compare}%)` }} />
+          style={{ objectFit:'cover', clipPath: 'inset(0 0 0 58%)' }} />
         <span className="result-tag tag-before">Before</span>
         <span className="result-tag tag-after">After · {mode.name}</span>
-        <div className="result-handle" style={{ left: `${compare}%` }}>
+        <div ref={handleRef} className="result-handle" style={{ left: '58%' }}>
           <span className="handle-bar" />
           <span className="handle-knob"><Icon.Compare width="16" height="16" /></span>
         </div>
@@ -617,7 +628,6 @@ function StageResult({ mode, result, error, beforeUrl, afterUrl, compare, setCom
         <div className="result-meta mono">
           <div><span>mode</span><span>{(result && result.modeTitle) || mode.name}</span></div>
           <div><span>resolution</span><span>{dims ? `${dims.w} × ${dims.h}` : '—'}</span></div>
-          <div><span>engine</span><span>gpt-image-1</span></div>
         </div>
         <div className="result-share">
           <span className="muted mono" style={{ fontSize: 10, letterSpacing:'.1em' }}>SHARE</span>
