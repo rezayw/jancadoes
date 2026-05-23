@@ -1,15 +1,19 @@
-// ui-modes.jsx — 7 modes showcase + interactive Try-it flow.
+// ui-modes.jsx — modes showcase + interactive Try-it flow.
 // The Try-it flow does real work: it uploads the photo to /api/enhance,
 // which applies the chosen mode's prompt (managed server-side).
 
 const MODE_DATA = [
-  { id:'studio',    name:'Phone → Studio',     desc:'Studio lighting + clean background',         icon:'ModeStudio',  tint:'studio',  color:'sage' },
-  { id:'lighting',  name:'Correct Lighting',   desc:'Fix exposure, recover shadows',              icon:'ModeLighting',tint:'cool',    color:'sage' },
-  { id:'golden',    name:'Golden Hour',        desc:'Warm portrait glow, soft skin tones',        icon:'ModeGolden',  tint:'golden',  color:'warm', featured:true },
-  { id:'restore',   name:'Restore Old',        desc:'Repair scratches, blur, and color fade',     icon:'ModeRestore', tint:'dusk',    color:'tan' },
-  { id:'people',    name:'Remove People',      desc:'Clear backgrounds from photo bombs',         icon:'ModePeople',  tint:'cool',    color:'sage' },
-  { id:'watermark', name:'Remove Watermark',   desc:'Auto-detect + erase watermarks cleanly',     icon:'ModeWatermark', tint:'warm',  color:'tan' },
-  { id:'fourk',     name:'4K Enhancer',        desc:'Upscale resolution up to 4× with detail',    icon:'Mode4K',      tint:'warm',    color:'warm' },
+  { id:'studio',    name:'Phone → Studio',      desc:'Studio lighting + clean background',     icon:'ModeStudio',    tint:'studio', color:'sage' },
+  { id:'lighting',  name:'Correct Lighting',    desc:'Fix exposure, recover shadows',          icon:'ModeLighting',  tint:'cool',   color:'sage' },
+  { id:'golden',    name:'Golden Hour',         desc:'Warm portrait glow, soft skin tones',    icon:'ModeGolden',    tint:'golden', color:'warm', featured:true },
+  { id:'restore',   name:'Restore Old',         desc:'Repair scratches, blur, and color fade', icon:'ModeRestore',   tint:'dusk',   color:'tan' },
+  { id:'people',    name:'Remove People',       desc:'Clear backgrounds from photo bombs',     icon:'ModePeople',    tint:'cool',   color:'sage' },
+  { id:'watermark', name:'Remove Watermark',    desc:'Auto-detect + erase watermarks cleanly', icon:'ModeWatermark', tint:'warm',   color:'tan' },
+  { id:'fourk',     name:'4K Enhancer',         desc:'Upscale resolution up to 4× with detail',icon:'Mode4K',        tint:'warm',   color:'warm' },
+  { id:'rembrandt', name:'B&W Rembrandt',       desc:'Moody studio portrait, single light',    icon:'ModeRembrandt', tint:'dusk',   color:'tan' },
+  { id:'cinematic', name:'Cinematic',           desc:'Dark fine-art editorial mood',           icon:'ModeCinematic', tint:'cool',   color:'sage' },
+  { id:'aesthetic', name:'Aesthetic Full-Body', desc:'Outdoor messy aesthetic full-body',      icon:'ModeAesthetic', tint:'warm',   color:'pink' },
+  { id:'minimal',   name:'Soft Minimalist',     desc:'Bright, airy editorial portrait',        icon:'ModeMinimal',   tint:'studio', color:'warm' },
 ];
 
 // Resolve a mode id to display data. 'auto' has no card, so synthesize one.
@@ -30,9 +34,9 @@ function ModesSection({ onPick }) {
       <div className="container">
         <div className="modes-head">
           <div>
-            <span className="eyebrow"><span className="dot" /> 7 Modes</span>
+            <span className="eyebrow"><span className="dot" /> {MODE_DATA.length} Modes</span>
             <h2 className="h-section" style={{ marginTop: 14, maxWidth: 760 }}>
-              One model, <em>seven</em> different ways to make<br/>your photo look better.
+              One model, <em>{MODE_DATA.length}</em> different ways to make<br/>your photo look better.
             </h2>
           </div>
           <p className="muted" style={{ maxWidth: 360, fontSize: 15, lineHeight: 1.55 }}>
@@ -143,11 +147,13 @@ function TryFlow() {
     setProgress(0);
     setError(null);
 
-    let p = 0;
+    // Realistic asymptotic ramp — approaches 92% over a ~150–200s wait,
+    // so the bar stays alive throughout instead of stalling after seconds.
+    const start = Date.now();
     const tick = setInterval(() => {
-      p = Math.min(92, p + 2 + Math.random() * 3.5);
-      setProgress(p);
-    }, 280);
+      const elapsed = (Date.now() - start) / 1000;
+      setProgress(Math.min(92, 92 * (1 - Math.exp(-elapsed / 90))));
+    }, 500);
 
     const form = new FormData();
     form.append('image', file);
@@ -518,7 +524,7 @@ function StageProcessing({ mode, progress, beforeUrl }) {
         <h3 style={{ fontSize: 24, fontWeight: 600, marginTop: 18, letterSpacing:'-.02em' }}>
           Enhancing your image<span className="proc-dots"><span/><span/><span/></span>
         </h3>
-        <p className="muted">Sebentar ya — Jancadoes lagi kerja. Jangan tutup tab.</p>
+        <p className="muted">Ultra quality butuh ~2–3 menit. Jangan tutup tab — hasilnya keluar sebentar lagi.</p>
 
         <div className="progress">
           <div className="progress-bar" style={{ width: `${progress}%` }} />

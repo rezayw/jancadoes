@@ -11,18 +11,22 @@ Node/Express backend (`server/`) that runs the photo through OpenAI
 
 ## Modes
 
-Seven enhancement modes, each driven by a hand-tuned RAG prompt — plus
+Eleven enhancement modes, each driven by a hand-tuned RAG prompt — plus
 **Auto-pick**, where `gpt-5` chooses the best mode for your photo:
 
-| # | Mode | What it does |
-|---|------|--------------|
-| 1 | Phone → Studio   | Studio lighting + clean background |
-| 2 | Correct Lighting | Fix exposure, recover shadows |
-| 3 | Golden Hour      | Warm portrait glow, soft skin tones |
-| 4 | Restore Old      | Repair scratches, blur, and color fade |
-| 5 | Remove People    | Clear background photo-bombs |
-| 6 | Remove Watermark | Auto-detect + erase watermarks |
-| 7 | 4K Enhancer      | Upscale resolution up to 4× with detail |
+| #  | Mode | What it does |
+|----|------|--------------|
+| 1  | Phone → Studio      | Studio lighting + clean background |
+| 2  | Correct Lighting    | Fix exposure, recover shadows |
+| 3  | Golden Hour         | Warm portrait glow, soft skin tones |
+| 4  | Restore Old         | Repair scratches, blur, and color fade |
+| 5  | Remove People       | Clear background photo-bombs |
+| 6  | Remove Watermark    | Auto-detect + erase watermarks |
+| 7  | 4K Enhancer         | Upscale resolution up to 4× with detail |
+| 8  | B&W Rembrandt       | Moody single-light black-and-white portrait |
+| 9  | Cinematic           | Dark fine-art editorial mood |
+| 10 | Aesthetic Full-Body | Outdoor messy aesthetic full-body |
+| 11 | Soft Minimalist     | Bright, airy editorial portrait |
 
 ## Run it with Docker (recommended)
 
@@ -72,9 +76,10 @@ or straight from the **Try it** flow.
 
 1. The user signs in, then uploads a photo (file or live camera) + chosen mode
    to `POST /api/enhance` with a `Bearer` token.
-2. `server/prompts.js` parses `docs/rag.md` — its 7 numbered sections map, in
-   order, to the 7 modes (`studio`, `lighting`, `golden`, `restore`, `people`,
-   `watermark`, `fourk`). The file is re-parsed automatically when it changes,
+2. `server/prompts.js` parses `docs/rag.md` — its numbered sections map, in
+   order, to the mode ids in `server/prompts.js` (`studio`, `lighting`,
+   `golden`, `restore`, `people`, `watermark`, `fourk`, `rembrandt`,
+   `cinematic`, `aesthetic`, `minimal`). The file is re-parsed automatically when it changes,
    and `docs/` is mounted into the container — so editing a prompt in
    `rag.md` takes effect on the next request, no rebuild or restart.
 3. `mode=auto` first asks `gpt-5` (vision) to pick the best mode.

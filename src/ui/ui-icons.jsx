@@ -114,6 +114,33 @@ const Icon = {
       <path d="M7 9v3h3M10 9v6M14 9v6M17 9v3l-3 .5" />
     </svg>
   ),
+  // B&W Rembrandt — face half-lit / half-shadow
+  ModeRembrandt: (p) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <circle cx="12" cy="12" r="7" />
+      <path d="M12 5 A 7 7 0 0 0 12 19 Z" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  // Cinematic — clapboard / film
+  ModeCinematic: (p) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <rect x="3" y="5" width="18" height="14" rx="1.5" />
+      <path d="M3 9h18M7 5l-1 4M11 5l-1 4M15 5l-1 4M19 5l-1 4" />
+    </svg>
+  ),
+  // Aesthetic — sparkle / star
+  ModeAesthetic: (p) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M12 3l2.3 5.4L20 9l-4 3.8 1 6L12 16l-5 2.8 1-6L4 9l5.7-.6z" />
+    </svg>
+  ),
+  // Soft Minimalist — concentric calm
+  ModeMinimal: (p) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <circle cx="12" cy="12" r="9" opacity=".35" />
+      <circle cx="12" cy="12" r="4" />
+    </svg>
+  ),
   Menu: (p) => (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" {...p}>
       <path d="M4 7h16M4 12h16M4 17h10" />

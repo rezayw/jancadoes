@@ -11,7 +11,10 @@ const path = require('path');
 const RAG_PATH = path.join(__dirname, '..', 'docs', 'rag.md');
 
 // Section order in rag.md → mode id used by the frontend (see MODE_DATA).
-const ORDER = ['studio', 'lighting', 'golden', 'restore', 'people', 'watermark', 'fourk'];
+const ORDER = [
+  'studio', 'lighting', 'golden', 'restore', 'people', 'watermark', 'fourk',
+  'rembrandt', 'cinematic', 'aesthetic', 'minimal',
+];
 
 function parse(raw) {
   // Each section: "## 1. TITLE\n\n<body…>" up to the next "## N." or EOF.

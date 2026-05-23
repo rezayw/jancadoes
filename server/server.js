@@ -24,8 +24,9 @@ const IMAGE_SIZE = process.env.IMAGE_SIZE || 'auto';
 // only sent for gpt-image-1 models (gpt-image-2 manages fidelity natively).
 const INPUT_FIDELITY = process.env.INPUT_FIDELITY || 'high';
 
-// Models — gpt-image-2 is OpenAI's latest image editor; gpt-5 (most capable
-// current model) drives the `auto` mode picker. Both overridable via env.
+// Models — gpt-image-2 is OpenAI's latest image editor (kept as the
+// default per user preference); gpt-5 (most capable current model) drives
+// the `auto` mode picker. Both overridable via env.
 const IMAGE_MODEL = process.env.IMAGE_MODEL || 'gpt-image-2';
 const AUTO_MODEL = process.env.AUTO_MODEL || 'gpt-5';
 // Reasoning effort for the auto-pick classifier — higher = more accurate.
